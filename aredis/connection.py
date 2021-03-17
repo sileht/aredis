@@ -415,9 +415,9 @@ class BaseConnection:
             await self._connect()
         except aredis.compat.CancelledError:
             raise
-        except Exception as e:
+        except Exception:
             e = sys.exc_info()[1]
-            raise ConnectionError("Error during initial connection: %s" % (e.args,))
+            raise ConnectionError("Error during initial connection: %s" % str(e))
         # run any user callbacks. right now the only internal callback
         # is for pubsub channel/pattern resubscription
         for callback in self._connect_callbacks:
